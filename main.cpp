@@ -1,5 +1,6 @@
+//MVSC
+
 #include <iostream>
-#include <random>
 #include <thread>
 #include <chrono>
 #include <functional>
@@ -9,8 +10,8 @@
 
 std::mutex calls_mutex;
 
-int universal_function(int n, int function_number, std::vector<std::function<int(int)>> &functions, int* calls);
-
+int universal_function(int n, int function_number, std::vector<std::function<int(int)>>& functions, int* calls);
+//Зроблено Подольським
 void log_and_sleep(int function_number, int* calls) {
     {
         std::lock_guard<std::mutex> guard(calls_mutex);
@@ -19,8 +20,8 @@ void log_and_sleep(int function_number, int* calls) {
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 100 + 10));
 }
-
-int universal_function(int n, int function_number, std::vector<std::function<int(int)>> &functions, int* calls) {
+//Зроблено Калениченком
+int universal_function(int n, int function_number, std::vector<std::function<int(int)>>& functions, int* calls) {
     log_and_sleep(function_number, calls);
     if (n <= 0) return 1;
 
@@ -45,7 +46,7 @@ int universal_function(int n, int function_number, std::vector<std::function<int
 
     return future1.get() + future2.get();
 }
-
+//Зроблено Подольським
 int main() {
     srand(time(NULL));
     int n;
@@ -55,7 +56,7 @@ int main() {
         return 1;
     }
 
-    int calls[4] = {0, 0, 0, 0};
+    int calls[4] = { 0, 0, 0, 0 };
 
     std::vector<std::function<int(int)>> functions = {
             std::bind(universal_function, std::placeholders::_1, 1, std::ref(functions), calls),
